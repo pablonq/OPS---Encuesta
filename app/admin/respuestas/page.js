@@ -46,6 +46,16 @@ export default function RespuestasPage() {
     );
   }, [respuestas]);
 
+  async function handleDelete(id) {
+    if (!confirm("¿Eliminar esta respuesta? Esta acción no se puede deshacer.")) return;
+    try {
+      await fetchJson(`/api/respuestas/${id}`, { method: "DELETE" });
+      setRespuestas((prev) => prev.filter((r) => r.id !== id));
+    } catch (err) {
+      setError(err.message);
+    }
+  }
+
   function handleExportCsv() {
     const headers = [
       "Capacitación",
@@ -154,19 +164,20 @@ export default function RespuestasPage() {
                 </th>
               ))}
               <th className="px-4 py-3">Observaciones</th>
+              <th className="px-4 py-3"></th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
             {loading && (
               <tr>
-                <td colSpan={8} className="px-4 py-6 text-center text-slate-400">
+                <td colSpan={9} className="px-4 py-6 text-center text-slate-400">
                   Cargando...
                 </td>
               </tr>
             )}
             {!loading && respuestas.length === 0 && (
               <tr>
-                <td colSpan={8} className="px-4 py-6 text-center text-slate-400">
+                <td colSpan={9} className="px-4 py-6 text-center text-slate-400">
                   No hay respuestas todavía.
                 </td>
               </tr>
@@ -184,6 +195,14 @@ export default function RespuestasPage() {
                   </td>
                 ))}
                 <td className="max-w-xs px-4 py-3 text-slate-600">{r.observaciones || "-"}</td>
+                <td className="px-4 py-3 text-right">
+                  <button
+                    onClick={() => handleDelete(r.id)}
+                    className="text-red-600 hover:underline"
+                  >
+                    Eliminar
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
