@@ -4,6 +4,46 @@ Aplicación web para que los operadores de campo completen una encuesta de
 satisfacción al finalizar cada capacitación, escaneando un código QR desde el
 teléfono.
 
+El sistema centraliza la evaluación de las capacitaciones de OPS y permite
+obtener información ordenada sobre la experiencia de los participantes. Está
+pensado para un uso simple y rápido en el lugar de la capacitación: el
+instructor dispone de un código QR fijo, los operadores responden desde su
+celular sin iniciar sesión y el equipo responsable consulta los resultados
+desde un panel protegido.
+
+## ¿Qué permite hacer?
+
+- Administrar el catálogo de capacitaciones, incluyendo nombre, carga horaria
+  y observaciones.
+- Registrar instructores y asociar sus datos a los formularios de evaluación.
+- Generar e imprimir un código QR permanente para cada instructor. El QR abre
+  el formulario público correspondiente en `/encuesta/[instructorId]`.
+- Permitir que cada operador seleccione la capacitación que está evaluando y
+  califique cinco aspectos de la experiencia en una escala de 1 a 5:
+  dominio del tema, claridad de los conceptos, respeto de los horarios,
+  calidad del material y aplicabilidad en la tarea diaria.
+- Recibir observaciones abiertas junto con las valoraciones numéricas.
+- Consultar las respuestas desde el panel administrativo, filtrarlas por
+  capacitación o instructor, revisar promedios y exportar los datos a CSV.
+
+## Flujo de uso
+
+1. El administrador inicia sesión en el panel y carga las capacitaciones e
+   instructores disponibles.
+2. Desde la sección de instructores genera o imprime el QR del instructor que
+   dictará la actividad.
+3. Al finalizar la capacitación, los operadores escanean el QR, seleccionan la
+   capacitación correspondiente y completan la encuesta desde su teléfono.
+4. Las respuestas se almacenan asociadas a la capacitación, el instructor y la
+   fecha de envío.
+5. El equipo administrativo revisa los resultados y descarga la información
+   para su seguimiento o análisis posterior.
+
+La aplicación separa la experiencia pública de los operadores del área de
+gestión interna. El formulario de encuesta está optimizado para dispositivos
+móviles, mientras que el panel administrativo concentra la carga de datos, la
+generación de QR y la consulta de resultados.
+
 - **Frontend:** Next.js (App Router) + React + TailwindCSS, JavaScript puro (sin TypeScript).
 - **Backend:** API Routes de Next.js.
 - **Base de datos:** Supabase (Postgres).
