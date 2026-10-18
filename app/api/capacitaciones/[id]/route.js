@@ -17,7 +17,7 @@ export const GET = apiRoute(async function GET(request, { params }) {
 export const PUT = apiRoute(async function PUT(request, { params }) {
   const { id } = await params;
   const body = await request.json().catch(() => ({}));
-  const { nombre, cargaHoraria, observacion } = body;
+  const { nombre, cargaHoraria, observacion, descripcion, procedimientos } = body;
 
   if (!nombre || !nombre.trim()) {
     return NextResponse.json({ error: "El nombre es obligatorio" }, { status: 400 });
@@ -29,6 +29,8 @@ export const PUT = apiRoute(async function PUT(request, { params }) {
       nombre: nombre.trim(),
       carga_horaria: cargaHoraria || null,
       observacion: observacion || null,
+      descripcion: descripcion?.trim() || null,
+      procedimientos: procedimientos?.trim() || null,
     })
     .eq("id", id)
     .select()

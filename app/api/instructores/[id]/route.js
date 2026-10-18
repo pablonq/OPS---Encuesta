@@ -17,7 +17,7 @@ export const GET = apiRoute(async function GET(request, { params }) {
 export const PUT = apiRoute(async function PUT(request, { params }) {
   const { id } = await params;
   const body = await request.json().catch(() => ({}));
-  const { nombreApellido, observaciones } = body;
+  const { nombreApellido, observaciones, firma } = body;
 
   if (!nombreApellido || !nombreApellido.trim()) {
     return NextResponse.json(
@@ -31,6 +31,7 @@ export const PUT = apiRoute(async function PUT(request, { params }) {
     .update({
       nombre_apellido: nombreApellido.trim(),
       observaciones: observaciones || null,
+      firma: firma || null,
     })
     .eq("id", id)
     .select()

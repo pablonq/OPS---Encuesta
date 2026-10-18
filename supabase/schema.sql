@@ -8,6 +8,8 @@ create table if not exists capacitaciones (
   nombre text not null,
   carga_horaria numeric,
   observacion text,
+  descripcion text,
+  procedimientos text,
   creada_en timestamptz not null default now()
 );
 
@@ -15,6 +17,7 @@ create table if not exists instructores (
   id uuid primary key default gen_random_uuid(),
   nombre_apellido text not null,
   observaciones text,
+  firma text, -- imagen de la firma (data URL PNG), usada en las credenciales
   creado_en timestamptz not null default now()
 );
 

@@ -14,7 +14,7 @@ export const GET = apiRoute(async function GET() {
 
 export const POST = apiRoute(async function POST(request) {
   const body = await request.json().catch(() => ({}));
-  const { nombreApellido, observaciones } = body;
+  const { nombreApellido, observaciones, firma } = body;
 
   if (!nombreApellido || !nombreApellido.trim()) {
     return NextResponse.json(
@@ -28,6 +28,7 @@ export const POST = apiRoute(async function POST(request) {
     .insert({
       nombre_apellido: nombreApellido.trim(),
       observaciones: observaciones || null,
+      firma: firma || null,
     })
     .select()
     .single();

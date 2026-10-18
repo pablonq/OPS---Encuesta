@@ -13,9 +13,11 @@ desde un panel protegido.
 
 ## ¿Qué permite hacer?
 
-- Administrar el catálogo de capacitaciones, incluyendo nombre, carga horaria
-  y observaciones.
-- Registrar instructores y asociar sus datos a los formularios de evaluación.
+- Administrar el catálogo de capacitaciones, incluyendo nombre, carga horaria,
+  observaciones, descripción y procedimientos (estos dos últimos se imprimen en
+  la credencial).
+- Registrar instructores, con su firma (imagen), y asociar sus datos a los
+  formularios de evaluación.
 - Generar e imprimir un código QR permanente para cada instructor. El QR abre
   el formulario público correspondiente en `/encuesta/[instructorId]`.
 - Permitir que cada operador seleccione la capacitación que está evaluando y
@@ -24,7 +26,13 @@ desde un panel protegido.
   calidad del material y aplicabilidad en la tarea diaria.
 - Recibir observaciones abiertas junto con las valoraciones numéricas.
 - Consultar las respuestas desde el panel administrativo, filtrarlas por
-  capacitación o instructor, revisar promedios y exportar los datos a CSV.
+  capacitación o instructor, revisar promedios, exportar los datos a CSV y
+  eliminar respuestas de prueba.
+- **Credenciales:** cargar un Excel (modelo descargable en
+  `public/modelo-credenciales.xlsx`) con Apellido, Nombres, DNI y Tarea, elegir
+  capacitación, instructor y fechas, y descargar todas las credenciales en un
+  único PDF (una por página, formato 16:9 como el diseño de Canva). El Excel se
+  procesa en el navegador y los datos personales no se guardan.
 
 ## Flujo de uso
 
@@ -51,11 +59,24 @@ generación de QR y la consulta de resultados.
 
 ## Modelo de datos
 
-- `capacitaciones`: id, nombre, carga_horaria, observacion.
-- `instructores`: id, nombre_apellido, observaciones.
+- `capacitaciones`: id, nombre, carga_horaria, observacion, descripcion,
+  procedimientos.
+- `instructores`: id, nombre_apellido, observaciones, firma (data URL PNG).
 - `respuestas`: id, capacitacion_id, instructor_id, dominio_tema,
   claridad_conceptos, respeto_horarios, calidad_material, aplicabilidad
   (1 a 5), observaciones, creada_en.
+
+### Credenciales: personalización opcional
+
+El PDF usa el logo OPS dibujado en vectores y no incluye marca de agua. Para usar
+los originales, copiar a `public/credencial/`: `logo.png` (reemplaza al logo
+vectorial) y/o `marca-agua.png` (se dibuja detrás del texto, a la derecha).
+
+### Seguridad
+
+Todas las rutas `/api/*` de datos (capacitaciones, instructores, respuestas) y
+las páginas `/admin` requieren sesión de administrador. El único endpoint
+público es el envío de la encuesta (`POST /api/respuestas`).
 
 Una misma capacitación puede tener varias instancias con distintos
 instructores y fechas: cada respuesta queda asociada a la capacitación, al

@@ -3,7 +3,13 @@
 import { useEffect, useState } from "react";
 import { fetchJson } from "@/lib/fetchJson";
 
-const emptyForm = { nombre: "", cargaHoraria: "", observacion: "" };
+const emptyForm = {
+  nombre: "",
+  cargaHoraria: "",
+  observacion: "",
+  descripcion: "",
+  procedimientos: "",
+};
 
 export default function CapacitacionesPage() {
   const [items, setItems] = useState([]);
@@ -36,6 +42,8 @@ export default function CapacitacionesPage() {
       nombre: item.nombre,
       cargaHoraria: item.carga_horaria ?? "",
       observacion: item.observacion ?? "",
+      descripcion: item.descripcion ?? "",
+      procedimientos: item.procedimientos ?? "",
     });
   }
 
@@ -62,6 +70,8 @@ export default function CapacitacionesPage() {
           nombre: form.nombre,
           cargaHoraria: form.cargaHoraria ? Number(form.cargaHoraria) : null,
           observacion: form.observacion,
+          descripcion: form.descripcion,
+          procedimientos: form.procedimientos,
         }),
       });
       cancelEdit();
@@ -122,6 +132,31 @@ export default function CapacitacionesPage() {
           />
         </div>
 
+        <div className="sm:col-span-2">
+          <label className="block text-sm font-medium text-slate-700">
+            Descripción <span className="font-normal text-slate-400">(se muestra en la credencial)</span>
+          </label>
+          <textarea
+            rows={2}
+            value={form.descripcion}
+            onChange={(e) => setForm((f) => ({ ...f, descripcion: e.target.value }))}
+            placeholder="Ej: Maniobras básicas con kit de rescate."
+            className="mt-1 w-full rounded-md border border-slate-300 p-2 text-sm focus:border-sky-600 focus:outline-none focus:ring-1 focus:ring-sky-600"
+          />
+        </div>
+        <div className="sm:col-span-2">
+          <label className="block text-sm font-medium text-slate-700">
+            Procedimientos <span className="font-normal text-slate-400">(uno por línea; se muestran en la credencial)</span>
+          </label>
+          <textarea
+            rows={3}
+            value={form.procedimientos}
+            onChange={(e) => setForm((f) => ({ ...f, procedimientos: e.target.value }))}
+            placeholder={"OPS-PO-GEN Nº017 Espacio Confinado.\nOPS-PO-GEN Nº041 Plan de Rescate en espacio confinado."}
+            className="mt-1 w-full rounded-md border border-slate-300 p-2 text-sm focus:border-sky-600 focus:outline-none focus:ring-1 focus:ring-sky-600"
+          />
+        </div>
+
         {error && <p className="text-sm text-red-600 sm:col-span-2">{error}</p>}
 
         <div className="flex gap-2 sm:col-span-2">
@@ -151,20 +186,21 @@ export default function CapacitacionesPage() {
               <th className="px-4 py-3">Nombre</th>
               <th className="px-4 py-3">Carga horaria</th>
               <th className="px-4 py-3">Observación</th>
+              <th className="px-4 py-3">Credencial</th>
               <th className="px-4 py-3"></th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
             {loading && (
               <tr>
-                <td colSpan={4} className="px-4 py-6 text-center text-slate-400">
+                <td colSpan={5} className="px-4 py-6 text-center text-slate-400">
                   Cargando...
                 </td>
               </tr>
             )}
             {!loading && items.length === 0 && (
               <tr>
-                <td colSpan={4} className="px-4 py-6 text-center text-slate-400">
+                <td colSpan={5} className="px-4 py-6 text-center text-slate-400">
                   No hay capacitaciones cargadas.
                 </td>
               </tr>
@@ -174,6 +210,14 @@ export default function CapacitacionesPage() {
                 <td className="px-4 py-3 font-medium text-slate-800">{item.nombre}</td>
                 <td className="px-4 py-3 text-slate-600">{item.carga_horaria ?? "-"}</td>
                 <td className="px-4 py-3 text-slate-600">{item.observacion || "-"}</td>
+                <td className="px-4 py-3 text-xs text-slate-500">
+                  {item.descripcion && item.procedimientos
+                    ? "Completa"
+                    : "Falta " +
+                      [!item.descripcion && "descripción", !item.procedimientos && "procedimientos"]
+                        .filter(Boolean)
+                        .join(" y ")}
+                </td>
                 <td className="px-4 py-3 text-right">
                   <button
                     onClick={() => startEdit(item)}

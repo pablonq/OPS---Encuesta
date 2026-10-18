@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { href: "/admin/capacitaciones", label: "Capacitaciones" },
   { href: "/admin/instructores", label: "Instructores" },
   { href: "/admin/respuestas", label: "Respuestas" },
+  { href: "/admin/credenciales", label: "Credenciales" },
 ];
 
 export default function AdminLayout({ children }) {

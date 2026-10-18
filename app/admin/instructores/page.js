@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import { fetchJson } from "@/lib/fetchJson";
 import QrCode from "@/components/QrCode";
+import { fileToResizedPngDataUrl } from "@/lib/imageUtils";
 
-const emptyForm = { nombreApellido: "", observaciones: "" };
+const emptyForm = { nombreApellido: "", observaciones: "", firma: "" };
 
 export default function InstructoresPage() {
   const [items, setItems] = useState([]);
@@ -43,12 +44,25 @@ export default function InstructoresPage() {
     setForm({
       nombreApellido: item.nombre_apellido,
       observaciones: item.observaciones ?? "",
+      firma: item.firma ?? "",
     });
   }
 
   function cancelEdit() {
     setEditingId(null);
     setForm(emptyForm);
+  }
+
+  async function handleFirmaChange(event) {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (!file) return;
+    try {
+      const dataUrl = await fileToResizedPngDataUrl(file);
+      setForm((f) => ({ ...f, firma: dataUrl }));
+    } catch (err) {
+      setError(err.message);
+    }
   }
 
   async function handleSubmit(event) {
@@ -113,6 +127,37 @@ export default function InstructoresPage() {
           />
         </div>
 
+        <div className="sm:col-span-2">
+          <label className="block text-sm font-medium text-slate-700">
+            Firma <span className="font-normal text-slate-400">(imagen PNG/JPG; se usa en las credenciales)</span>
+          </label>
+          <div className="mt-1 flex flex-wrap items-center gap-4">
+            <input
+              type="file"
+              accept="image/png,image/jpeg"
+              onChange={handleFirmaChange}
+              className="text-sm text-slate-600 file:mr-3 file:rounded-md file:border-0 file:bg-slate-100 file:px-3 file:py-2 file:text-sm file:font-medium file:text-slate-700 hover:file:bg-slate-200"
+            />
+            {form.firma && (
+              <div className="flex items-center gap-3">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={form.firma}
+                  alt="Firma del instructor"
+                  className="h-14 rounded border border-slate-200 bg-white p-1"
+                />
+                <button
+                  type="button"
+                  onClick={() => setForm((f) => ({ ...f, firma: "" }))}
+                  className="text-sm text-red-600 hover:underline"
+                >
+                  Quitar firma
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
         {error && <p className="text-sm text-red-600 sm:col-span-2">{error}</p>}
 
         <div className="flex gap-2 sm:col-span-2">
@@ -141,6 +186,7 @@ export default function InstructoresPage() {
             <tr>
               <th className="px-4 py-3">Nombre y apellido</th>
               <th className="px-4 py-3">Observaciones</th>
+              <th className="px-4 py-3">Firma</th>
               <th className="px-4 py-3">QR de encuesta</th>
               <th className="px-4 py-3"></th>
             </tr>
@@ -148,14 +194,14 @@ export default function InstructoresPage() {
           <tbody className="divide-y divide-slate-100">
             {loading && (
               <tr>
-                <td colSpan={4} className="px-4 py-6 text-center text-slate-400">
+                <td colSpan={5} className="px-4 py-6 text-center text-slate-400">
                   Cargando...
                 </td>
               </tr>
             )}
             {!loading && items.length === 0 && (
               <tr>
-                <td colSpan={4} className="px-4 py-6 text-center text-slate-400">
+                <td colSpan={5} className="px-4 py-6 text-center text-slate-400">
                   No hay instructores cargados.
                 </td>
               </tr>
@@ -167,6 +213,18 @@ export default function InstructoresPage() {
                 </td>
                 <td className="px-4 py-3 text-slate-600 align-top">
                   {item.observaciones || "-"}
+                </td>
+                <td className="px-4 py-3 align-top">
+                  {item.firma ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={item.firma}
+                      alt={`Firma de ${item.nombre_apellido}`}
+                      className="h-12 rounded border border-slate-200 bg-white p-1"
+                    />
+                  ) : (
+                    <span className="text-slate-400">-</span>
+                  )}
                 </td>
                 <td className="px-4 py-3 align-top">
                   {origin && (
