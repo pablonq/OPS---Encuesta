@@ -69,8 +69,8 @@ generación de QR y la consulta de resultados.
 ### Credenciales: personalización opcional
 
 El PDF usa el logo `public/logo_ops2.png` (si el archivo falta, dibuja un logo
-vectorial de respaldo) y no incluye marca de agua. Para sumarla, copiar
-`marca-agua.png` a `public/credencial/` (se dibuja detrás del texto, a la derecha).
+vectorial de respaldo) y la figura de fondo `public/Reglas_vida.png` (se dibuja
+detrás del texto, a la derecha; si falta, se omite).
 
 ### Seguridad
 

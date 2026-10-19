@@ -83,10 +83,10 @@ export default function CredencialesPage() {
         cargarBytes("/fonts/Roboto-Regular.ttf"),
         cargarBytes("/fonts/Roboto-Bold.ttf"),
         cargarBytes("/fonts/Roboto-Black.ttf"),
-        // Logo de la credencial (public/logo_ops2.png); si faltara, se dibuja el logo vectorial.
-        // La marca de agua es opcional: si existe en /public/credencial se dibuja detrás del texto.
+        // Logo (public/logo_ops2.png); si faltara, se dibuja un logo vectorial de respaldo.
         cargarBytes("/logo_ops2.png", { opcional: true }),
-        cargarBytes("/credencial/marca-agua.png", { opcional: true }),
+        // Figura de fondo "Reglas de vida" (public/Reglas_vida.png); si faltara, se omite.
+        cargarBytes("/Reglas_vida.png", { opcional: true }),
       ]);
 
       const bytes = await generarCredencialesPdf({
