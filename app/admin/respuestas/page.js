@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { RATING_QUESTIONS } from "@/lib/questions";
 import { fetchJson } from "@/lib/fetchJson";
+import PageHeader from "@/components/ui/PageHeader";
+import Button from "@/components/ui/Button";
 
 export default function RespuestasPage() {
   const [capacitaciones, setCapacitaciones] = useState([]);
@@ -87,30 +89,30 @@ export default function RespuestasPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-xl font-semibold text-slate-900">Respuestas</h1>
-        <button
-          onClick={handleExportCsv}
-          disabled={respuestas.length === 0}
-          className="rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50"
-        >
-          Exportar CSV
-        </button>
-      </div>
+      <PageHeader
+        eyebrow="Seguimiento"
+        title="Respuestas"
+        description="Resultados de las encuestas completadas por los operadores."
+        actions={
+          <Button variant="secondary" onClick={handleExportCsv} disabled={respuestas.length === 0}>
+            Exportar CSV
+          </Button>
+        }
+      />
 
       {error && (
-        <p className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+        <p className="rounded-ops-md border border-ops-danger/30 bg-ops-danger-bg p-3 text-sm text-[#b32d2d]">
           {error}
         </p>
       )}
 
-      <div className="grid grid-cols-1 gap-4 rounded-lg border border-slate-200 bg-white p-5 shadow-sm sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 rounded-ops-lg border border-ops-border bg-white p-5 shadow-ops-sm sm:grid-cols-2">
         <div>
-          <label className="block text-sm font-medium text-slate-700">Capacitación</label>
+          <label className="block text-[13px] font-medium text-ops-navy">Capacitación</label>
           <select
             value={capacitacionId}
             onChange={(e) => setCapacitacionId(e.target.value)}
-            className="mt-1 w-full rounded-md border border-slate-300 p-2 text-sm focus:border-sky-600 focus:outline-none focus:ring-1 focus:ring-sky-600"
+            className="mt-1 w-full rounded-ops-md border border-ops-border-2 p-2 text-sm focus:border-ops-blue focus:outline-none focus:ring-[3px] focus:ring-ops-blue/20"
           >
             <option value="">Todas</option>
             {capacitaciones.map((c) => (
@@ -121,11 +123,11 @@ export default function RespuestasPage() {
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-slate-700">Instructor</label>
+          <label className="block text-[13px] font-medium text-ops-navy">Instructor</label>
           <select
             value={instructorId}
             onChange={(e) => setInstructorId(e.target.value)}
-            className="mt-1 w-full rounded-md border border-slate-300 p-2 text-sm focus:border-sky-600 focus:outline-none focus:ring-1 focus:ring-sky-600"
+            className="mt-1 w-full rounded-ops-md border border-ops-border-2 p-2 text-sm focus:border-ops-blue focus:outline-none focus:ring-[3px] focus:ring-ops-blue/20"
           >
             <option value="">Todos</option>
             {instructores.map((i) => (
@@ -142,18 +144,18 @@ export default function RespuestasPage() {
           {RATING_QUESTIONS.map((q) => (
             <div
               key={q.column}
-              className="rounded-lg border border-slate-200 bg-white p-4 text-center shadow-sm"
+              className="rounded-ops-lg border border-ops-border bg-white p-4 text-center shadow-ops-sm"
             >
-              <p className="text-2xl font-bold text-sky-700">{promedios[q.column]}</p>
-              <p className="mt-1 text-xs text-slate-500">{q.label}</p>
+              <p className="text-2xl font-bold text-ops-blue">{promedios[q.column]}</p>
+              <p className="mt-1 text-xs text-ops-gray-500">{q.label}</p>
             </div>
           ))}
         </div>
       )}
 
-      <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white shadow-sm">
-        <table className="min-w-full divide-y divide-slate-200 text-sm">
-          <thead className="bg-slate-50 text-left text-xs font-medium uppercase text-slate-500">
+      <div className="overflow-x-auto rounded-ops-lg border border-ops-border bg-white shadow-ops-sm">
+        <table className="min-w-full divide-y divide-ops-border text-sm">
+          <thead className="bg-ops-gray-50 text-left font-display text-[11px] font-semibold uppercase tracking-[0.06em] text-ops-gray-500">
             <tr>
               <th className="px-4 py-3">Fecha</th>
               <th className="px-4 py-3">Capacitación</th>
@@ -167,38 +169,38 @@ export default function RespuestasPage() {
               <th className="px-4 py-3"></th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-ops-border">
             {loading && (
               <tr>
-                <td colSpan={9} className="px-4 py-6 text-center text-slate-400">
+                <td colSpan={9} className="px-4 py-6 text-center text-ops-gray-400">
                   Cargando...
                 </td>
               </tr>
             )}
             {!loading && respuestas.length === 0 && (
               <tr>
-                <td colSpan={9} className="px-4 py-6 text-center text-slate-400">
+                <td colSpan={9} className="px-4 py-6 text-center text-ops-gray-400">
                   No hay respuestas todavía.
                 </td>
               </tr>
             )}
             {respuestas.map((r) => (
-              <tr key={r.id}>
-                <td className="whitespace-nowrap px-4 py-3 text-slate-600">
+              <tr key={r.id} className="transition-colors hover:bg-ops-blue-50">
+                <td className="whitespace-nowrap px-4 py-3 text-ops-gray-600">
                   {new Date(r.creada_en).toLocaleString("es-AR")}
                 </td>
-                <td className="px-4 py-3 text-slate-800">{r.capacitaciones?.nombre}</td>
-                <td className="px-4 py-3 text-slate-800">{r.instructores?.nombre_apellido}</td>
+                <td className="px-4 py-3 text-ops-navy">{r.capacitaciones?.nombre}</td>
+                <td className="px-4 py-3 text-ops-navy">{r.instructores?.nombre_apellido}</td>
                 {RATING_QUESTIONS.map((q) => (
-                  <td key={q.column} className="px-4 py-3 text-center text-slate-700">
+                  <td key={q.column} className="px-4 py-3 text-center text-ops-gray-700">
                     {r[q.column]}
                   </td>
                 ))}
-                <td className="max-w-xs px-4 py-3 text-slate-600">{r.observaciones || "-"}</td>
+                <td className="max-w-xs px-4 py-3 text-ops-gray-600">{r.observaciones || "-"}</td>
                 <td className="px-4 py-3 text-right">
                   <button
                     onClick={() => handleDelete(r.id)}
-                    className="text-red-600 hover:underline"
+                    className="text-ops-danger hover:underline"
                   >
                     Eliminar
                   </button>

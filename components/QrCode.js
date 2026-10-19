@@ -23,15 +23,15 @@ export default function QrCode({ value, size = 220, fileName = "qr-encuesta.png"
 
   return (
     <div className="flex flex-col items-center gap-3">
-      <div className="rounded-lg border border-slate-200 bg-white p-3 shadow-sm">
+      <div className="rounded-ops-lg border border-ops-border bg-white p-3 shadow-ops-sm">
         <canvas ref={canvasRef} />
       </div>
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-ops-danger">{error}</p>}
       {dataUrl && !error && (
         <a
           href={dataUrl}
           download={fileName}
-          className="inline-flex items-center gap-2 rounded-md bg-sky-700 px-4 py-2 text-sm font-medium text-white hover:bg-sky-800"
+          className="inline-flex items-center gap-2 rounded-ops-md bg-ops-blue px-4 py-2 text-sm font-medium text-white hover:bg-ops-blue-600 hover:shadow-ops-blue"
         >
           Descargar QR
         </a>

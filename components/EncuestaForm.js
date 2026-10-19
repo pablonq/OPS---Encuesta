@@ -60,9 +60,9 @@ export default function EncuestaForm({ instructorId, capacitaciones }) {
 
   if (done) {
     return (
-      <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-6 text-center">
-        <p className="text-lg font-semibold text-emerald-800">¡Gracias por tu respuesta!</p>
-        <p className="mt-2 text-sm text-emerald-700">
+      <div className="rounded-ops-lg border border-ops-success/30 bg-ops-success-bg p-6 text-center">
+        <p className="text-lg font-semibold text-[#157a42]">¡Gracias por tu respuesta!</p>
+        <p className="mt-2 text-sm text-[#157a42]">
           Tu opinión nos ayuda a mejorar las próximas capacitaciones.
         </p>
       </div>
@@ -88,7 +88,7 @@ export default function EncuestaForm({ instructorId, capacitaciones }) {
       ))}
 
       <div className="space-y-2">
-        <label htmlFor="observaciones" className="block text-base font-medium text-slate-800">
+        <label htmlFor="observaciones" className="block text-base font-medium text-ops-navy">
           Observaciones (opcional)
         </label>
         <textarea
@@ -96,13 +96,13 @@ export default function EncuestaForm({ instructorId, capacitaciones }) {
           rows={4}
           value={observaciones}
           onChange={(e) => setObservaciones(e.target.value)}
-          className="w-full rounded-md border border-slate-300 p-3 text-sm focus:border-[#008EC6] focus:outline-none focus:ring-1 focus:ring-[#008EC6]"
+          className="w-full rounded-ops-md border border-ops-border-2 p-3 text-sm focus:border-ops-blue focus:outline-none focus:ring-[3px] focus:ring-ops-blue/20"
           placeholder="Comentarios, sugerencias, temas para futuras capacitaciones..."
         />
       </div>
 
       {error && (
-        <p className="rounded-md bg-red-50 p-3 text-sm text-red-700 border border-red-200">
+        <p className="rounded-ops-md bg-ops-danger-bg p-3 text-sm text-[#b32d2d] border border-ops-danger/30">
           {error}
         </p>
       )}
@@ -110,7 +110,7 @@ export default function EncuestaForm({ instructorId, capacitaciones }) {
       <button
         type="submit"
         disabled={submitting || capacitaciones.length === 0}
-        className="w-full rounded-md bg-[#008EC6] px-4 py-3 text-base font-semibold text-white transition hover:bg-[#00719d] disabled:cursor-not-allowed disabled:opacity-60"
+        className="w-full rounded-ops-md bg-ops-blue px-4 py-3 text-base font-semibold text-white transition hover:bg-ops-blue-600 hover:shadow-ops-blue disabled:cursor-not-allowed disabled:opacity-60"
       >
         {submitting ? "Enviando..." : "Enviar encuesta"}
       </button>

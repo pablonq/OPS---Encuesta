@@ -3,9 +3,10 @@
 import { useEffect, useState } from "react";
 import { fetchJson } from "@/lib/fetchJson";
 import { parseCredencialesRows, sumarAnios } from "@/lib/credenciales";
+import PageHeader from "@/components/ui/PageHeader";
 
 const inputClass =
-  "mt-1 w-full rounded-md border border-slate-300 p-2 text-sm focus:border-sky-600 focus:outline-none focus:ring-1 focus:ring-sky-600";
+  "mt-1 w-full rounded-ops-md border border-ops-border-2 p-2 text-sm focus:border-ops-blue focus:outline-none focus:ring-[3px] focus:ring-ops-blue/20";
 
 async function cargarBytes(url, { opcional = false } = {}) {
   const respuesta = await fetch(url);
@@ -120,18 +121,18 @@ export default function CredencialesPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-semibold text-slate-900">Credenciales</h1>
+      <PageHeader eyebrow="Documentos" title="Credenciales" description="Generá todas las credenciales en un único PDF a partir de un Excel." />
 
       {error && (
-        <p className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error}</p>
+        <p className="rounded-ops-md border border-ops-danger/30 bg-ops-danger-bg p-3 text-sm text-[#b32d2d]">{error}</p>
       )}
 
       {/* Paso 1: datos */}
-      <section className="space-y-4 rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+      <section className="space-y-4 rounded-ops-lg border border-ops-border bg-white p-5 shadow-ops-sm">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <h2 className="text-base font-semibold text-slate-900">1. Cargar el listado de personas</h2>
-            <p className="mt-1 text-sm text-slate-500">
+            <h2 className="text-base font-semibold text-ops-navy">1. Cargar el listado de personas</h2>
+            <p className="mt-1 text-sm text-ops-gray-500">
               Excel con las columnas <strong>Apellido, Nombres, DNI y Tarea</strong>. Los datos se
               procesan en tu navegador y no se guardan.
             </p>
@@ -139,7 +140,7 @@ export default function CredencialesPage() {
           <a
             href="/modelo-credenciales.xlsx"
             download
-            className="rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="rounded-ops-md border border-ops-border-2 px-4 py-2 text-sm font-medium text-ops-gray-700 hover:bg-ops-blue-50"
           >
             Descargar modelo de Excel
           </a>
@@ -149,38 +150,38 @@ export default function CredencialesPage() {
           type="file"
           accept=".xlsx"
           onChange={handleArchivo}
-          className="text-sm text-slate-600 file:mr-3 file:rounded-md file:border-0 file:bg-sky-700 file:px-4 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-sky-800"
+          className="text-sm text-ops-gray-600 file:mr-3 file:rounded-ops-md file:border-0 file:bg-ops-blue file:px-4 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-ops-blue-600"
         />
 
         {lectura && (
           <div className="space-y-3">
-            <p className="text-sm text-slate-700">
+            <p className="text-sm text-ops-gray-700">
               <strong>{archivo}</strong>: {cantidad} {cantidad === 1 ? "persona lista" : "personas listas"} para
               generar credencial.
             </p>
 
             {lectura.errores.length > 0 && (
-              <ul className="list-inside list-disc rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+              <ul className="list-inside list-disc rounded-ops-md border border-ops-danger/30 bg-ops-danger-bg p-3 text-sm text-[#b32d2d]">
                 {lectura.errores.map((e) => (
                   <li key={e}>{e}</li>
                 ))}
               </ul>
             )}
             {lectura.advertencias.length > 0 && (
-              <ul className="list-inside list-disc rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
+              <ul className="list-inside list-disc rounded-ops-md border border-ops-warning/30 bg-ops-warning-bg p-3 text-sm text-[#a9690a]">
                 {lectura.advertencias.map((a) => (
                   <li key={a}>{a}</li>
                 ))}
               </ul>
             )}
             {lectura.errores.length > 0 && cantidad > 0 && (
-              <p className="text-xs text-slate-500">Las filas con errores no se incluyen en el PDF.</p>
+              <p className="text-xs text-ops-gray-500">Las filas con errores no se incluyen en el PDF.</p>
             )}
 
             {cantidad > 0 && (
-              <div className="overflow-x-auto rounded-md border border-slate-200">
-                <table className="min-w-full divide-y divide-slate-200 text-sm">
-                  <thead className="bg-slate-50 text-left text-xs font-medium uppercase text-slate-500">
+              <div className="overflow-x-auto rounded-ops-md border border-ops-border">
+                <table className="min-w-full divide-y divide-ops-border text-sm">
+                  <thead className="bg-ops-gray-50 text-left font-display text-[11px] font-semibold uppercase tracking-[0.06em] text-ops-gray-500">
                     <tr>
                       <th className="px-3 py-2">Apellido</th>
                       <th className="px-3 py-2">Nombres</th>
@@ -188,7 +189,7 @@ export default function CredencialesPage() {
                       <th className="px-3 py-2">Tarea</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100">
+                  <tbody className="divide-y divide-ops-border">
                     {lectura.credenciales.slice(0, 8).map((p, i) => (
                       <tr key={`${p.dni}-${i}`}>
                         <td className="px-3 py-2">{p.apellido}</td>
@@ -199,7 +200,7 @@ export default function CredencialesPage() {
                     ))}
                     {cantidad > 8 && (
                       <tr>
-                        <td colSpan={4} className="px-3 py-2 text-center text-xs text-slate-400">
+                        <td colSpan={4} className="px-3 py-2 text-center text-xs text-ops-gray-400">
                           … y {cantidad - 8} más
                         </td>
                       </tr>
@@ -213,11 +214,11 @@ export default function CredencialesPage() {
       </section>
 
       {/* Paso 2: capacitación, instructor, fechas */}
-      <section className="space-y-4 rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-        <h2 className="text-base font-semibold text-slate-900">2. Capacitación e instructor</h2>
+      <section className="space-y-4 rounded-ops-lg border border-ops-border bg-white p-5 shadow-ops-sm">
+        <h2 className="text-base font-semibold text-ops-navy">2. Capacitación e instructor</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
-            <label className="block text-sm font-medium text-slate-700">Capacitación</label>
+            <label className="block text-[13px] font-medium text-ops-navy">Capacitación</label>
             <select
               value={capacitacionId}
               onChange={(e) => setCapacitacionId(e.target.value)}
@@ -232,7 +233,7 @@ export default function CredencialesPage() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700">Instructor</label>
+            <label className="block text-[13px] font-medium text-ops-navy">Instructor</label>
             <select
               value={instructorId}
               onChange={(e) => setInstructorId(e.target.value)}
@@ -247,7 +248,7 @@ export default function CredencialesPage() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700">Fecha de capacitación</label>
+            <label className="block text-[13px] font-medium text-ops-navy">Fecha de capacitación</label>
             <input
               type="date"
               value={fechaCapacitacion}
@@ -259,8 +260,8 @@ export default function CredencialesPage() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700">
-              Fecha de vencimiento <span className="font-normal text-slate-400">(por defecto, 1 año)</span>
+            <label className="block text-[13px] font-medium text-ops-navy">
+              Fecha de vencimiento <span className="font-normal text-ops-gray-400">(por defecto, 1 año)</span>
             </label>
             <input
               type="date"
@@ -271,18 +272,18 @@ export default function CredencialesPage() {
           </div>
         </div>
 
-        <label className="flex items-center gap-2 text-sm text-slate-700">
+        <label className="flex items-center gap-2 text-sm text-ops-gray-700">
           <input
             type="checkbox"
             checked={incluirFoto}
             onChange={(e) => setIncluirFoto(e.target.checked)}
-            className="h-4 w-4 rounded border-slate-300"
+            className="h-4 w-4 rounded border-ops-border-2"
           />
           Incluir recuadro vacío para pegar la foto
         </label>
 
         {avisos.length > 0 && (
-          <ul className="list-inside list-disc rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
+          <ul className="list-inside list-disc rounded-ops-md border border-ops-warning/30 bg-ops-warning-bg p-3 text-sm text-[#a9690a]">
             {avisos.map((a) => (
               <li key={a}>{a}</li>
             ))}
@@ -291,13 +292,13 @@ export default function CredencialesPage() {
       </section>
 
       {/* Paso 3: generar */}
-      <section className="space-y-4 rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-        <h2 className="text-base font-semibold text-slate-900">3. Generar credenciales</h2>
+      <section className="space-y-4 rounded-ops-lg border border-ops-border bg-white p-5 shadow-ops-sm">
+        <h2 className="text-base font-semibold text-ops-navy">3. Generar credenciales</h2>
         <div className="flex flex-wrap items-center gap-3">
           <button
             onClick={handleGenerar}
             disabled={!listo || generando}
-            className="rounded-md bg-sky-700 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-800 disabled:opacity-50"
+            className="rounded-ops-md bg-ops-blue px-4 py-2 text-sm font-semibold text-white hover:bg-ops-blue-600 hover:shadow-ops-blue disabled:opacity-50"
           >
             {generando
               ? "Generando..."
@@ -306,7 +307,7 @@ export default function CredencialesPage() {
                 : "Generar credenciales en PDF"}
           </button>
           {!listo && (
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-ops-gray-500">
               Falta: {[
                 cantidad === 0 && "cargar el Excel",
                 !capacitacion && "elegir la capacitación",
@@ -322,20 +323,20 @@ export default function CredencialesPage() {
 
         {resultado && (
           <div className="space-y-3">
-            <p className="text-sm text-emerald-700">
+            <p className="text-sm text-[#157a42]">
               Listo: {resultado.cantidad} {resultado.cantidad === 1 ? "credencial generada" : "credenciales generadas"} en un único PDF.
             </p>
             <a
               href={resultado.url}
               download="credenciales.pdf"
-              className="inline-flex rounded-md bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700"
+              className="inline-flex rounded-ops-md bg-ops-success px-4 py-2 text-sm font-semibold text-white hover:bg-[#157a42]"
             >
               Descargar PDF
             </a>
             <iframe
               src={resultado.url}
               title="Vista previa de las credenciales"
-              className="h-[480px] w-full rounded-md border border-slate-200"
+              className="h-[480px] w-full rounded-ops-md border border-ops-border"
             />
           </div>
         )}

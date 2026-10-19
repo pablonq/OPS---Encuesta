@@ -23,21 +23,21 @@ export default async function EncuestaPage({ params }) {
   }
 
   return (
-    <main className="min-h-full bg-[#008EC6] px-4 py-10">
+    <main className="min-h-full bg-ops-blue px-4 py-10">
       <div className="mx-auto flex max-w-xl flex-col items-center gap-6">
         
 
-        <div className="w-full rounded-2xl bg-white p-6 shadow-xl sm:p-8">
+        <div className="w-full rounded-ops-xl bg-white p-6 shadow-ops-lg sm:p-8">
         <div className="mb-6 flex justify-center">
           <Image src="/logo ops.jpeg" alt="OPS - Oilfield Production Services" width={220} height={87} priority />
         </div>
         <header className="mb-8 space-y-1 text-center">
-            <p className="text-xl font-semibold uppercase tracking-widest text-[#008EC6]">
+            <p className="font-display text-xl font-semibold uppercase tracking-widest text-ops-blue">
               Encuesta de capacitación
             </p>
             <div className="flex items-baseline gap-2 justify-center">
-              <p className="text-sm text-slate-500">Instructor:</p>
-              <h1 className="text-2xl font-bold text-slate-900">{instructor.nombre_apellido}</h1>
+              <p className="text-sm text-ops-gray-500">Instructor:</p>
+              <h1 className="text-2xl font-bold text-ops-navy">{instructor.nombre_apellido}</h1>
               
             </div>
           </header>

@@ -13,7 +13,7 @@ const VALUE_COLORS = {
 export default function RatingInput({ label, name, value, onChange, required = true }) {
   return (
     <fieldset className="space-y-3">
-      <legend className="text-base font-medium text-slate-800">{label}</legend>
+      <legend className="text-base font-medium text-ops-navy">{label}</legend>
       <div className="grid grid-cols-5 gap-2">
         {OPTIONS.map((option) => {
           const selected = value === option;
@@ -25,9 +25,9 @@ export default function RatingInput({ label, name, value, onChange, required = t
               aria-pressed={selected}
               onClick={() => onChange(name, option)}
               style={{ backgroundColor: colors.bg, color: colors.text }}
-              className={`flex h-12 items-center justify-center rounded-md text-lg font-semibold transition ${
+              className={`flex h-12 items-center justify-center rounded-ops-md text-lg font-semibold transition ${
                 selected
-                  ? "scale-105 ring-4 ring-slate-800 ring-offset-2"
+                  ? "scale-105 ring-4 ring-ops-navy ring-offset-2"
                   : "opacity-55 hover:opacity-100"
               }`}
             >
@@ -36,12 +36,12 @@ export default function RatingInput({ label, name, value, onChange, required = t
           );
         })}
       </div>
-      <div className="flex justify-between text-xs text-slate-500">
+      <div className="flex justify-between text-xs text-ops-gray-500">
         <span>Muy en desacuerdo</span>
         <span>Muy de acuerdo</span>
       </div>
       {required && value == null && (
-        <p className="text-xs text-slate-400">Seleccioná un valor de 1 a 5.</p>
+        <p className="text-xs text-ops-gray-400">Seleccioná un valor de 1 a 5.</p>
       )}
     </fieldset>
   );

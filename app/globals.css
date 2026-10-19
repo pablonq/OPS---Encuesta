@@ -1,24 +1,82 @@
 @import "tailwindcss";
 
-:root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
-}
+/* ============================================================
+   OPS — Oilfield Production Services · tokens del sistema de diseño
+   Paleta de marca: #008EC6 (azul), #08132D (azul noche), #F2F2F2 (gris).
+   Tipografías: Saira (display, sustituye a Bahnschrift) y Roboto (texto).
+   ============================================================ */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  /* Marca */
+  --color-ops-blue: #008ec6;
+  --color-ops-blue-50: #e8f6fc;
+  --color-ops-blue-100: #c9eaf7;
+  --color-ops-blue-200: #95d6ef;
+  --color-ops-blue-300: #57bde4;
+  --color-ops-blue-400: #1fa3d6;
+  --color-ops-blue-600: #0077a8;
+  --color-ops-blue-700: #006089;
+  --color-ops-blue-800: #064c6b;
+  --color-ops-navy: #08132d;
+  --color-ops-navy-800: #122142;
+  --color-ops-navy-700: #1e3358;
+
+  /* Neutros */
+  --color-ops-gray: #f2f2f2;
+  --color-ops-gray-50: #fafbfc;
+  --color-ops-gray-300: #cdd3da;
+  --color-ops-gray-400: #aab2bd;
+  --color-ops-gray-500: #7c8896;
+  --color-ops-gray-600: #586676;
+  --color-ops-gray-700: #3c4a59;
+  --color-ops-border: #e1e5ea;
+  --color-ops-border-2: #cdd3da;
+  --color-ops-sunken: #eef0f3;
+
+  /* Estados (siempre en dosis chicas) */
+  --color-ops-success: #1f9d57;
+  --color-ops-success-bg: #e7f6ee;
+  --color-ops-warning: #e0900b;
+  --color-ops-warning-bg: #fdf3e0;
+  --color-ops-danger: #d83a3a;
+  --color-ops-danger-bg: #fbe9e9;
+
+  /* Radios */
+  --radius-ops-sm: 6px;
+  --radius-ops-md: 10px;
+  --radius-ops-lg: 14px;
+  --radius-ops-xl: 20px;
+
+  /* Sombras (azul noche, baja opacidad) */
+  --shadow-ops-xs: 0 1px 2px rgba(8, 19, 45, 0.06);
+  --shadow-ops-sm: 0 1px 3px rgba(8, 19, 45, 0.08), 0 1px 2px rgba(8, 19, 45, 0.04);
+  --shadow-ops-md: 0 4px 12px rgba(8, 19, 45, 0.08), 0 2px 4px rgba(8, 19, 45, 0.04);
+  --shadow-ops-lg: 0 12px 32px rgba(8, 19, 45, 0.12), 0 4px 8px rgba(8, 19, 45, 0.05);
+  --shadow-ops-blue: 0 6px 18px rgba(0, 142, 198, 0.28);
+
+  /* Tipografías (variables definidas con next/font en app/layout.js) */
+  --font-sans: var(--font-roboto), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-saira), "Bahnschrift", "DIN Next", system-ui, sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif;
+  background: var(--color-ops-gray);
+  color: var(--color-ops-navy);
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+}
+
+::selection {
+  background: rgba(0, 142, 198, 0.2);
+}
+
+/* Foco visible siempre en azul OPS (software de seguridad: accesibilidad). */
+:focus-visible {
+  outline: 2px solid var(--color-ops-blue);
+  outline-offset: 2px;
 }
