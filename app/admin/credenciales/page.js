@@ -83,8 +83,9 @@ export default function CredencialesPage() {
         cargarBytes("/fonts/Roboto-Regular.ttf"),
         cargarBytes("/fonts/Roboto-Bold.ttf"),
         cargarBytes("/fonts/Roboto-Black.ttf"),
-        // Opcionales: si existen en /public/credencial se usan en lugar del logo vectorial / sin marca de agua.
-        cargarBytes("/credencial/logo.png", { opcional: true }),
+        // Logo de la credencial (public/logo_ops2.png); si faltara, se dibuja el logo vectorial.
+        // La marca de agua es opcional: si existe en /public/credencial se dibuja detrás del texto.
+        cargarBytes("/logo_ops2.png", { opcional: true }),
         cargarBytes("/credencial/marca-agua.png", { opcional: true }),
       ]);
 

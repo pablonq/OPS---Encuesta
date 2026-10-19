@@ -68,9 +68,9 @@ generación de QR y la consulta de resultados.
 
 ### Credenciales: personalización opcional
 
-El PDF usa el logo OPS dibujado en vectores y no incluye marca de agua. Para usar
-los originales, copiar a `public/credencial/`: `logo.png` (reemplaza al logo
-vectorial) y/o `marca-agua.png` (se dibuja detrás del texto, a la derecha).
+El PDF usa el logo `public/logo_ops2.png` (si el archivo falta, dibuja un logo
+vectorial de respaldo) y no incluye marca de agua. Para sumarla, copiar
+`marca-agua.png` a `public/credencial/` (se dibuja detrás del texto, a la derecha).
 
 ### Seguridad
 
